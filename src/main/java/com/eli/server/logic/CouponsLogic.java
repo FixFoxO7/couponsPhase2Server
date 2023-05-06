@@ -150,7 +150,6 @@ public class CouponsLogic {
 
     public List<BasicCouponDto> getAllBasicByCategory(long categoryId, int pageNumber) throws ServerException {
 
-        categoriesLogic.validateCategoryExist(categoryId);
         Pageable paging = PageRequest.of(pageNumber, Consts.AMOUNT_OF_ITEMS_PER_PAGE);
         try {
             List<Coupon> coupons = iCouponsDal.findAllByCategory(categoryId, paging);
@@ -250,7 +249,6 @@ public class CouponsLogic {
         companiesLogic.validateCompanyExist(companyId);
 
         long categoryId = coupon.getCategory().getId();
-        categoriesLogic.validateCategoryExist(categoryId);
 
         if (!ValidatorUtils.isNameValid(coupon.getName())) {
             throw new ServerException(ErrorType.INVALID_NAME_LENGTH, " name=" + coupon.getName());

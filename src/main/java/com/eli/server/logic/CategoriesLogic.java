@@ -53,7 +53,6 @@ public class CategoriesLogic {
 
         ValidatorUtils.validateToken(authorization);
         ValidatorUtils.validateUserPermission(authorization, UserType.ADMIN);
-        validateCategoryExist(categoryId);
         try {
             iCategoriesDal.deleteById(categoryId);
         } catch (Exception e) {
@@ -63,7 +62,6 @@ public class CategoriesLogic {
 
     public CategoryDto getById(long categoryId) throws ServerException {
 
-        validateCategoryExist(categoryId);
         try {
             Category category = iCategoriesDal.findById(categoryId).get();
             String name = category.getName();
@@ -97,10 +95,4 @@ public class CategoriesLogic {
         }
     }
 
-    void validateCategoryExist(long categoryId) throws ServerException {
-
-        if (!iCategoriesDal.existsById(categoryId)) {
-            throw new ServerException(ErrorType.UNSUPPORTED_REQUEST, "Category does NOT exist, id=" + categoryId);
-        }
-    }
 }
